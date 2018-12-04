@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 from collections import defaultdict
+from collections import Counter
 import operator
 import re
 
@@ -11,19 +12,21 @@ def extractGuard(str):
     pattern = ("(?<=#)(\d)*")
     return re.search(pattern, str).group(0)
 
-def getSleepiestGuard(dict):
-    return sorted(guardNaps.items(), key=operator.itemgetter(1))[-1:][0][0]
-
-def getSleepiestMinute(dict, ele):
-    maxVal = 0
-    maxIndex = 0
+def getTheSleepiest(dict):
+    mostCommonGuard = 0
+    mostCommonMinute = 0
+    maxOccurrences = 0
     for i in range(60):
-        currentOccurrences = dict[i].count(ele)
-        if currentOccurrences > maxVal:
-            maxIndex = i
-            maxVal = currentOccurrences
+        dataForThisMinute = dict[i]
+        if dataForThisMinute:
+            mostCommonThisMinute = Counter(dataForThisMinute).most_common(1)[0]
 
-    return maxIndex
+            if mostCommonThisMinute[1] > maxOccurrences:
+                mostCommonGuard = mostCommonThisMinute[0]
+                mostCommonMinute = i
+                maxOccurrences = mostCommonThisMinute[1]
+
+    return [ int(mostCommonGuard), mostCommonMinute ]
 
 
 currentGuard = ""
@@ -47,7 +50,6 @@ for line in f:
     if "begins shift" in line:
         currentGuard = extractGuard(line)
 
-sleepiestGuard = getSleepiestGuard(guardNaps)
-sleepiestMinute = getSleepiestMinute(napDictionary, sleepiestGuard)
-
-print int(sleepiestGuard) * sleepiestMinute
+answer = getTheSleepiest(napDictionary)
+print answer
+print answer[0]*answer[1]
