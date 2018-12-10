@@ -5,24 +5,18 @@ from collections import deque
 def marble_game(players, last):
     game = deque()
     game.append(0)
-    game.append(1)
     scores = [0] * players
-    current_player = 2
 
-    for current_marble in range(2, last):
+    for current_marble in range(1, last):
         if current_marble % 23 == 0:
+            current_player = current_marble % players
             scores[current_player] += current_marble
             game.rotate(7)
-            marble_to_remove = game.pop()
-            scores[current_player] += marble_to_remove
+            scores[current_player] += game.pop()
             game.rotate(-1)
         else:
             game.rotate(-1)
             game.append(current_marble)
-
-        current_player += 1
-        if current_player == num_players:
-            current_player = 0
 
     return max(scores)
 

@@ -4,7 +4,6 @@ current_frequency = 0
 resulting_frequency = 0
 frequency_history = []
 end_condition = False
-# run_count = 1
 
 while not end_condition:
     f = open("day-1--input", "r")
@@ -18,5 +17,3 @@ while not end_condition:
             break
         else:
             current_frequency = resulting_frequency
-#    print "Run count: " + str(run_count)
-#    run_count += 1
