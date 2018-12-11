@@ -19,7 +19,6 @@ max_j = 0
 max_power = 0
 
 max_power_level_board_size = board_size - 3
-max_power_level_board = [ [0] * max_power_level_board_size ] * max_power_level_board_size
 
 for i in range(max_power_level_board_size):
     for j in range(max_power_level_board_size):
@@ -30,14 +29,5 @@ for i in range(max_power_level_board_size):
             max_power = power_block_val
             max_i = i
             max_j = j
-        max_power_level_board[i][j] = power_block_val
 
 print max_power, max_i, max_j
-
-#print max(map(max,max_power_level_board))
-
-#for i in range(board_size):
-#    s = ''
-#    for j in range(board_size):
-#        s += str(power_level_board[i][j]) + '  '
-#    print s
